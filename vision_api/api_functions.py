@@ -107,7 +107,7 @@ def process_all_images(path):
             f.close()
 
 def main():
-    print process_file(r"images\receipt1.jpg")
+    print json.dumps(process_file(r"images\receipt1.jpg"), indent=3)
 ##    process_all_images(r"c:\nlp\finance_hack\scans")
     pass
 
