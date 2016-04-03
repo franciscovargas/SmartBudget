@@ -5,7 +5,7 @@
 
 # For license information, see LICENSE.TXT
 
-import requests
+import requests, json
 import base64
 import json
 
@@ -18,11 +18,21 @@ def process_file(filename):
     # url = "http://127.0.0.1/ocr/read/"
     url = "http://koko.inf.ed.ac.uk/ocr/read/"
     files = {'file': image_content}
+<<<<<<< HEAD
     r = requests.post(url, data=json.dumps(files) )
     print r.text
 
 def main():
     process_file(r"ff1.jpg")
+=======
+##    print json.dumps(files)
+    r = requests.post(url, data=json.dumps(files))
+    print r.text
+
+def main():
+##    process_file(r"..\..\scans\tesco\IMG_5664.JPG")
+    process_file(r"..\..\scans\farmfoods\IMG_5645.JPG")
+>>>>>>> 2cb4d406e538e42b02cab6ef5f64fe7e8de98ad2
     pass
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ from __future__ import print_function
 from flask import Flask, jsonify, Blueprint, request, Response
 from flask.ext.cors import CORS
 
-import logging, json, sys
+import logging, json, sys, base64
 
 from api_functions import extract_text, process_ocr_text
 
@@ -38,13 +38,21 @@ def api_search():
     """
     print(request)
     print(request.remote_addr)
-    print(request.data)
+##    print(request.data)
     data=json.loads(request.data)
     file_content = data["file"]
+    f=file("request_image.jpg",'wb')
+    f.write(base64.b64decode(file_content))
+    f.close()
 
     try:
-        data=process_ocr_text(extract_text(file_content))
-        resp=jsonify(data=data)
+        ocr_text=extract_text(file_content)
+        data=process_ocr_text(ocr_text)
+        if not data:
+            resp=jsonify(error="Unknown receipt format")
+            resp.status_code=418 # I am a teapot
+        else:
+            resp=jsonify(data={"data":data, "ocr_text":ocr_text[0] if len(ocr_text) > 0 else ""})
         resp.status_code=200 # all good
     except Exception as e:
         resp=jsonify(error="Runtime error: "+str(sys.exc_info()[:2]))
