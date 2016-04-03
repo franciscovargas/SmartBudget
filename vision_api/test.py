@@ -17,7 +17,7 @@ def process_file(filename):
     url = "http://127.0.0.1/ocr/read/"
 ##    url = "http://koko.inf.ed.ac.uk/ocr/read/"
     files = {'file': image_content}
-    r = requests.post(url, files=files)
+    r = requests.post(url, json=files)
     print r.text
 
 def main():

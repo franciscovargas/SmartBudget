@@ -38,8 +38,9 @@ def api_search():
     """
     print(request)
     print(request.remote_addr)
-    f = request.files["file"]
-    file_content=f.read()
+    print(request.data)
+    data=json.loads(request.data)
+    file_content = data["file"]
 
     try:
         data=process_ocr_text(extract_text(file_content))
