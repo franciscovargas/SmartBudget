@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Quarterly Sales</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="quarterChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Details per quarter</h3>
+                </div>
+                <div id="detailChart" class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- you need to include the shieldui css and js assets in order for the charts to work -->
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var performanceData = [
+            { quarter: 0, min: 3, max: 9, values: [12, 3, 4, 2, 12, 3, 4, 17, 22, 34, 54, 67] },
+            { quarter: 1, min: 12, max: 23, values: [3, 9, 12, 14, 22, 32, 45, 12, 67, 45, 55, 7] },
+            { quarter: 2, min: 1, max: 17, values: [23, 19, 11, 134, 242, 352, 435, 22, 637, 445, 555, 57] },
+            { quarter: 3, min: -3, max: 12, values: [13, 19, 112, 114, 212, 332, 435, 132, 67, 45, 55, 7] }
+        ];
+        $(function () {
+            $("#quarterChart").shieldChart({
+                exportOptions: {
+                    image: false,
+                    print: false
+                },
+                seriesSettings: {
+                    rangebar: {
+                        enablePointSelection: true
+                    }
+                },
+                tooltipSettings: {
+                    customPointText: "Low Value: <b>{point.low}</b><br />High Value:<b>{point.high}</b>"
+                },
+                axisY: {
+                    title: {
+                        text: "Quarter Overview"
+                    }
+                },
+                axisX: {
+                    categoricalValues: ["Q1", "Q2", "Q3", "Q4"]
+                },
+                primaryHeader: {
+                    text: "Quarterly Performance"
+                },
+                dataSeries: [{
+                    seriesType: "rangebar",
+                    collectionAlias: "Low/High",
+                    data: $.map(performanceData, function (item, index) {
+                        return [[item.min, item.max]];
+                    })
+                }],
+                events: {
+                    pointSelect: function (args) {
+                        var detailData = performanceData[args.point.x].values,
+                            detailChartElement = $("#detailChart"),
+                            detailChart = detailChartElement.swidget(),
+                            initialOptions = detailChart.initialOptions,
+                            headerText = args.point.name + " Performance";
+                        detailChart.destroy();
+                        detailChartElement.shieldChart($.extend(initialOptions, {
+                            primaryHeader: {
+                                text: headerText
+                            },
+                            dataSeries: [{
+                                seriesType: "line",
+                                collectionAlias: "Q Data",
+                                data: detailData
+                            }]
+                        }));
+                    }
+                }
+            });
+            $("#detailChart").shieldChart({
+                exportOptions: {
+                    image: false,
+                    print: false
+                },
+                axisY: {
+                    title: {
+                        text: "Break-Down for selected quarter"
+                    }
+                },
+                primaryHeader: {
+                    text: "Q1 Performance"
+                },
+                dataSeries: [{
+                    seriesType: "line",
+                    collectionAlias: "Q Data",
+                    data: performanceData[0].values
+                }]
+            });
+        });
+    });
+</script>

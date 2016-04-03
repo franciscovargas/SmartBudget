@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Dashboard Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="container">
+
+<div class="page-header">
+    <h1>Hello !!<small>User12345 </small></h1>
+</div>
+
+<!-- Simple Dashboard - START -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Quarterly Sales</h3>
+                </div>
+                <div id="it" class="panel-body">
+                    <div id="quarterChart"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Details per quarter</h3>
+                </div>
+                <div id="it2" class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
+</script>
+
+<style>
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+  .bar rect {
+    fill: steelblue;
+    shape-rendering: crispEdges;
+  }
+  .bar rect:hover{
+    fill: rgba(0,0,0,.8);
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+</style>
+<script type="text/javascript" src="hist.js"></script>
+<script type="text/javascript" src="kalman.js"></script>
+<script type="text/javascript" src="sylvestre.js"></script>
+<script src="app.js"></script>
+
+<script type="text/javascript">
+  //  quarterChart
+    $(document).ready(function() {
+          // cs =
+
+              csvdata = [{"day":"2014-08-01","shop":"Tesco", "price": 10},
+              {"day":"2014-08-02","shop":"LIDL", "price": 40},
+              {"day":"2014-08-02","shop":"M&S", "price": 1},
+              {"day":"2014-08-02","shop":"ASDA", "price": 100},
+              {"day":"2014-08-03","shop":"Waitrose", "price": 11},
+              {"day":"2014-08-26","shop":"Morrisons","price": 40},
+              {"day":"2014-08-06","shop":"Mccoys","price": 2},
+              {"day":"2014-09-07","shop":"Sainsburies","price": 20},
+              {"day":"2014-08-06","shop":"Tesco","price": 5},
+              {"day":"2014-08-06","shop":"ASDA","price": 20},
+              {"day":"2014-08-02","shop":"Tesco","price": 2},
+              {"day":"2014-08-02","shop":"LIDL","price": 200},
+              {"day":"2014-08-21","shop":"LIDL","price": 50},
+              {"day":"2014-08-21","shop":"Tesco","price": 25}];
+              // bbbbbb
+               mpghist(csvdata);
+
+
+
+    });
+</script>
+<!-- Simple Dashboard - END -->
+
+</div>
+
+</body>
+</html>

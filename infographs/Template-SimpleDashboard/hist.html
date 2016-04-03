@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <body>
+    <title>MPG Data</title>
+    <style>
+      .d3-tip {
+        line-height: 1;
+        font-weight: bold;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 2px;
+      }
+      .bar rect {
+        fill: steelblue;
+        shape-rendering: crispEdges;
+      }
+      .bar rect:hover{
+        fill: rgba(0,0,0,.8);
+      }
+      .axis path, .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+    </style>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
+    </script>
+    <script type="text/javascript" src="hist.js"></script>
+    <script>
+// plot a histogram from mpg data in a .csv file
+
+
+// Read in .csv data and make graph
+d3.csv("prius_gas.csv", parser,
+       function(error, csvdata) {
+     console.log(csvdata);
+	   mpghist(csvdata);
+});
+
+
+    </script>
+    <div id="mpg" class="graph"></div>
+  </body>
+</html>
