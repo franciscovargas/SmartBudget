@@ -43,12 +43,13 @@ def api_search():
     file_content = data["file"]
 
     try:
-        data=process_ocr_text(extract_text(file_content))
+        ocr_text=extract_text(file_content)
+        data=process_ocr_text(ocr_text)
         if not data:
             resp=jsonify(error="Unknown receipt format")
             resp.status_code=418 # I am a teapot
         else:
-            resp=jsonify(data=data)
+            resp=jsonify(data={"data":data, "ocr_text":ocr_text[0] if len(ocr_text) > 0 else ""})
         resp.status_code=200 # all good
     except Exception as e:
         resp=jsonify(error="Runtime error: "+str(sys.exc_info()[:2]))
