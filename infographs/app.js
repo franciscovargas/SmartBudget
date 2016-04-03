@@ -31,7 +31,7 @@ function addAxesAndLegend (svg, xAxis, yAxis, margin, chartWidth, chartHeight) {
       .attr('x','10000!' )
       .attr('dy', '.71em')
       .style('text-anchor', 'end')
-      .text('Time (s)');
+      .text('total (\u00A3) ');
 }
 
 function drawPaths (svg, data, x, y, chartWidth, chartHeight,cats, index) {
@@ -152,7 +152,7 @@ function makeChart (dats, cats) {
     .innerTickSize(-chartWidth).outerTickSize(0).tickPadding(1.5);
 
 
-    // hERE IS WHERE THE LOCATION OF GRAPH IS ASSIGNED. 
+    // hERE IS WHERE THE LOCATION OF GRAPH IS ASSIGNED.
     var svg = d3.select('body').append('svg')
     .attr('width',  svgWidth)
     .attr('height', svgHeight)
@@ -251,8 +251,8 @@ d3.json('dat.json', function (error, rawData) {
   var data = rawData.map(function (d) {
     return {
       date:  parseDate(d.date),
-      tot: d.tot,
-      var: d.var,
+      tot: d.tot/100,
+      var: d.var/100,
     };
   });
 

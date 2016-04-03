@@ -5,18 +5,19 @@
     <title>Simple Dashboard Template | PrepBootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
 <div class="container">
 
 <div class="page-header">
-    <h1>Simple Dashboard <small>Bootstrap template, demonstrating a simple dashboard page with two related charts</small></h1>
+    <h1>Hello !!<small>User12345 </small></h1>
 </div>
 
 <!-- Simple Dashboard - START -->
@@ -37,21 +38,44 @@
                 <div class="panel-heading">
                     <h3>Details per quarter</h3>
                 </div>
-                <div id="detailChart" class="panel-body">
+                <div id="it2" class="panel-body">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- you need to include the shieldui css and js assets in order for the charts to work -->
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
 </script>
+
+<style>
+  .d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+  }
+  .bar rect {
+    fill: steelblue;
+    shape-rendering: crispEdges;
+  }
+  .bar rect:hover{
+    fill: rgba(0,0,0,.8);
+  }
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+</style>
 <script type="text/javascript" src="hist.js"></script>
+<script type="text/javascript" src="kalman.js"></script>
+<script type="text/javascript" src="sylvestre.js"></script>
+<script src="app.js"></script>
 
 <script type="text/javascript">
   //  quarterChart
@@ -63,7 +87,6 @@
                console.log(csvdata);
                mpghist(csvdata);
           });
-      // }):
 
 
     });

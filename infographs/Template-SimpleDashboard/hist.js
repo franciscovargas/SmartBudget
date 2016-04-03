@@ -46,7 +46,7 @@ function mpghist(csvdata) {
     console.log(histdata);
 
     var margin = {top: 20, right: 20, bottom: 70, left: 40},
-    width = 600 - margin.left - margin.right,
+    width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
     // Parse the date / time
@@ -77,7 +77,7 @@ function mpghist(csvdata) {
    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^");
 
     // put the graph in the "mpg" div
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#it").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

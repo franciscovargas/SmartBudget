@@ -31,7 +31,7 @@ function addAxesAndLegend (svg, xAxis, yAxis, margin, chartWidth, chartHeight) {
       .attr('x','10000!' )
       .attr('dy', '.71em')
       .style('text-anchor', 'end')
-      .text('Time (s)');
+      .text('total (\u00A3) ');
 }
 
 function drawPaths (svg, data, x, y, chartWidth, chartHeight,cats, index) {
@@ -110,8 +110,7 @@ function drawPaths (svg, data, x, y, chartWidth, chartHeight,cats, index) {
 
   svg.append('path')
     .attr('class', 'median-line')
-    .attr('d', medianLine)
-    .attr('clip-path', 'url(#rect-clip)').style("opacity", "0.8").style("stroke-width", "2").style("stroke", s);
+    .attr('d', medianLine).style("opacity", "0.8").style("stroke-width", "2").style("stroke", s);
   x1=[]
   y1=[]
 
@@ -135,8 +134,8 @@ function startTransitions (svg, chartWidth, chartHeight, rectClip, x) {
 }
 
 function makeChart (dats, cats) {
-  var svgWidth  = 960,
-      svgHeight = 500,
+  var svgWidth  = 500,
+      svgHeight = 300,
       margin = { top: 20, right: 20, bottom: 40, left: 40 },
       chartWidth  = svgWidth  - margin.left - margin.right,
       chartHeight = svgHeight - margin.top  - margin.bottom;
@@ -151,7 +150,9 @@ function makeChart (dats, cats) {
     yAxis = d3.svg.axis().scale(y).orient('left')
     .innerTickSize(-chartWidth).outerTickSize(0).tickPadding(1.5);
 
-    var svg = d3.select('body').append('svg')
+
+    // hERE IS WHERE THE LOCATION OF GRAPH IS ASSIGNED.
+    var svg = d3.select('#it2').append('svg')
     .attr('width',  svgWidth)
     .attr('height', svgHeight)
     .append('g')
@@ -182,69 +183,21 @@ function makeChart (dats, cats) {
 
 }
 
-// Testing:
-
-
-var parseDate  = d3.time.format('%Y-%m-%d').parse;
-
-
-d3.json('dat.json', function (error, rawData) {
-  if (error) {
-    console.error(error);
-    return;
+function kalman(data){
+  // Kalman filter prediction
+  margin = { top: 20, right: 20, bottom: 40, left: 40 }
+  chartWidth  = 960  - margin.left - margin.right;
+  var x = d3.time.scale().range([0, chartWidth])
+  .domain(d3.extent(data, function (d) { return d.date; }));
+  x1 = []
+  y1 = []
+  y2 = []
+  for(i in data){
+    x1.push(x(data[i].date));
+    y1.push( data[i].tot);
+    y2.push( data[i].var);
   }
-
-  var data = rawData.map(function (d) {
-    return {
-      date:  parseDate(d.date),
-      tot: d.tot,
-      var: d.var,
-    };
-  });
-
-   var data2 = rawData.map(function (d) {
-    return {
-      date:  parseDate(d.date),
-      tot: d.tot -100,
-      var: d.var/1.2 ,
-    };
-  });
-
-  var data3 = rawData.map(function (d) {
-   return {
-     date:  parseDate(d.date),
-     tot: d.tot*3,
-     var: d.var*3,
-   };
- });
-
-
-
- margin = { top: 20, right: 20, bottom: 40, left: 40 }
- chartWidth  = 960  - margin.left - margin.right;
- var x = d3.time.scale().range([0, chartWidth])
- .domain(d3.extent(data, function (d) { return d.date; }));
- x1 = []
- y1 = []
- y2 = []
- for(i in data){
-   x1.push(x(data[i].date));
-   y1.push( data[i].tot);
-   y2.push( data[i].var);
- }
- console.log(data);
-
-
-
-// evaluate on a datapoint. We will get a 1x1x1 Vol back, so we get the
-// actual output by looking into its 'w' field:
-// var predicted_values = net.forward(tester);
-// console.log('predicted value: ' + predicted_values.w[0]);
-
-//   // init()
-//
-//
-function kalman(x1, y1,y2, data){
+  // Creates interpolation and prediction of a curve
   var x_0 = $V([y1[0]]);
   var x_02 = $V([y2[0]]);
   var P_0 = $M([[10]]);
@@ -274,20 +227,45 @@ function kalman(x1, y1,y2, data){
   cache = data[data.length -1].date
   for(var i = 1; i<3;i++){
 
-     px = KM.update(KO)
+    px = KM.update(KO)
 
-     cache =  d3.time.day.offset(cache, i)
-     data4.push({"tot" : KM.x_k.elements[0] , "var": 100 , "date": cache } )
+    cache =  d3.time.day.offset(cache, i)
+    data4.push({"tot" : KM.x_k.elements[0] , "var": 100 , "date": cache } )
   }
 
   return data4;
 }
 
-  data4 = kalman(x1, y1,y2, data);
+// EXAMPLE USAGE:
 
- console.log("DONE");
-  var dl = [data4, data];
-  var cats = [ "real", "fit"]
+var parseDate  = d3.time.format('%Y-%m-%d').parse;
+
+
+d3.json('dat.json', function (error, rawData) {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  var data = rawData.map(function (d) {
+    return {
+      date:  parseDate(d.date),
+      tot: d.tot/100,
+      var: d.var/100,
+    };
+  });
+
+
+
+  // The schema of data and data4 are:
+  // data4.push({"tot" : tot price , "var": std of bill , "date": date of bill } )
+  // std can be hardcoded if need be.
+
+
+  data4 = kalman(data); // Kalman prediction graph
+
+  var dl = [data4, data]; // list of graphs
+  var cats = [ "Bayesian Network fit", "real"]
   makeChart(dl, cats);
 
 
