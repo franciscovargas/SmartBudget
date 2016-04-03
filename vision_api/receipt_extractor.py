@@ -231,7 +231,7 @@ class OCRReceiptExtractor(object):
         """
         return {
                 "company": self.store,
-                "datetime": self.date.isoformat(" ") if date else None,
+                "datetime": self.date.isoformat(" ") if self.date else None,
                 "total": self.total,
                 "items": self.items,
                 }
