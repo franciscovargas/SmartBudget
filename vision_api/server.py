@@ -13,6 +13,8 @@ curl -H "Content-Type: application/json" -H "Accept: application/json" -X POST -
 
 from __future__ import print_function
 from flask import Flask, jsonify, Blueprint, request, Response
+from flask.ext.cors import CORS
+
 import logging, json, sys
 
 from api_functions import extract_text, process_ocr_text
@@ -35,7 +37,7 @@ def api_search():
         OCR API entry point.
     """
     print(request)
-    print(request.files)
+    print(request.remote_addr)
     f = request.files["file"]
     file_content=f.read()
 
@@ -49,14 +51,15 @@ def api_search():
         return resp
     return resp
 
-def startStandaloneServer(host="0.0.0.0", port=5000):
+def startStandaloneServer(host="0.0.0.0", port=80):
     """
         Starts a basic server with the blueprint
     """
     app = Flask(__name__)
+    CORS(app)
     app.register_blueprint(ocr_bp, url_prefix="/ocr")
 ##    app.register_blueprint(static_bp, url_prefix="/")
-
+##    logging.getLogger('flask_cors').level = logging.DEBUG
 
     print("Running main OCR API on %s:%d" % (host,port))
     app.logger.addHandler(logging.StreamHandler(sys.stdout))

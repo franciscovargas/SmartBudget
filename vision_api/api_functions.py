@@ -84,12 +84,13 @@ def process_file(filename):
     """
     image=file(filename,"rb")
     image_content = base64.b64encode(image.read()).decode('UTF-8')
-##    return extract_text(image_content)
     if os.path.exists(CACHE_FILENAME):
         data=json.load(file(CACHE_FILENAME,"r"))
     else:
         data=extract_text(image_content)
         json.dump(data,file(CACHE_FILENAME,"w"))
+
+##    data=extract_text(image_content)
     return process_ocr_text(data)
 
 def process_all_images(path):
@@ -107,7 +108,7 @@ def process_all_images(path):
             f.close()
 
 def main():
-    print process_file(r"images\receipt1.jpg")
+    print json.dumps(process_file(r"images\ff1.jpg"), indent=3)
 ##    process_all_images(r"c:\nlp\finance_hack\scans")
     pass
 
