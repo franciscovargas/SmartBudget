@@ -38,7 +38,7 @@ def api_search():
     """
     print(request)
     print(request.remote_addr)
-    print(request.data)
+##    print(request.data)
     data=json.loads(request.data)
     file_content = data["file"]
 

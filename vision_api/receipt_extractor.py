@@ -9,7 +9,7 @@ import re, datetime
 
 STORE_PATTERNS={
     "Tesco":"tesco",
-    "Farmfoods":"farm foods",
+    "Farmfoods":"farm\s?\s?foods",
     "Lidl":"lidl",
     "National Rail":"national rail",
 }
