@@ -38,7 +38,7 @@ def getPrice(text):
 def isAllDigits(text):
     """
     """
-    return re.match(r"[0-9\.\s]+",text,re.IGNORECASE)
+    return re.match(r"[0-9\.\s]+",text,re.IGNORECASE) and not re.search(r"[a-zA-Z\s]+",text,re.IGNORECASE)
 
 class OCRReceiptExtractor(object):
     """
@@ -170,7 +170,7 @@ class OCRReceiptExtractor(object):
 
         for index, desc in enumerate(self.lines):
             if re.search("DESCRIPTION", desc):
-                start_at=index
+                start_at=index+1
                 break
 
         for index, desc in enumerate(self.lines[start_at:]):
@@ -184,9 +184,11 @@ class OCRReceiptExtractor(object):
                 continue
 
             total=re.search(r"Total\s+due\:\s+(.*)",desc,flags=re.IGNORECASE)
-            price=getPrice(total)
-            if price:
-                self.total=price
+            if total:
+                price=getPrice(total.group(1))
+                if price:
+                    self.total=price
+                break
 
             price=getPrice(desc)
             if price:
@@ -240,7 +242,7 @@ class OCRReceiptExtractor(object):
         if self.store=="Tesco":
             return self.processTescoData()
         elif self.store=="Farmfoods":
-            return None
+            return self.processFarmfoodsData()
         else:
             print("Cannot identify store")
             print(self.annotations[:3])

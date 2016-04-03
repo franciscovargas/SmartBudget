@@ -15,12 +15,13 @@ def process_file(filename):
     image=file(filename,"rb")
     image_content = base64.b64encode(image.read()).decode('UTF-8')
     url = "http://127.0.0.1:5000/ocr/read/"
+##    url = "http://koko.inf.ed.ac.uk/ocr/read/"
     files = {'file': image_content}
     r = requests.post(url, files=files)
     print r.text
 
 def main():
-    process_file(r"images\receipt1.jpg")
+    process_file(r"images\ff1.jpg")
     pass
 
 if __name__ == '__main__':
