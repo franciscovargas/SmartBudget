@@ -130,8 +130,8 @@ class OCRReceiptExtractor(object):
             Returns a dict with all the extracted info
         """
         return {
-                "store": self.store,
-                "date": self.date,
+                "company": self.store,
+                "datetime": self.date,
                 "total": self.total,
                 "items": self.items,
                 }
