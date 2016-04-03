@@ -17,11 +17,12 @@ def process_file(filename):
 ##    url = "http://127.0.0.1/ocr/read/"
     url = "http://koko.inf.ed.ac.uk/ocr/read/"
     files = {'file': image_content}
+##    print json.dumps(files)
     r = requests.post(url, data=json.dumps(files))
     print r.text
 
 def main():
-    process_file(r"images\ff1.jpg")
+    process_file(r"..\..\scans\tesco\IMG_5664.JPG")
     pass
 
 if __name__ == '__main__':

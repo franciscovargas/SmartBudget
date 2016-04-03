@@ -44,7 +44,11 @@ def api_search():
 
     try:
         data=process_ocr_text(extract_text(file_content))
-        resp=jsonify(data=data)
+        if not data:
+            resp=jsonify(error="Unknown receipt format")
+            resp.status_code=418 # I am a teapot
+        else:
+            resp=jsonify(data=data)
         resp.status_code=200 # all good
     except Exception as e:
         resp=jsonify(error="Runtime error: "+str(sys.exc_info()[:2]))

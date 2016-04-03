@@ -77,7 +77,7 @@ class OCRReceiptExtractor(object):
                 skip_line-=1
                 continue
 
-            if re.search(r"TOTAL\s+TO\s+PAY",desc,flags=re.IGNORECASE):
+            if re.match(r"TOTAL\s+(TO\s+PAY)?",desc,flags=re.IGNORECASE):
                 price=None
                 cnt=index
                 while not price and cnt < len(self.lines):
@@ -105,6 +105,9 @@ class OCRReceiptExtractor(object):
             if re.search(r"TOTAL\s+SAVINGS",desc,flags=re.IGNORECASE):
                 break
 
+            if re.search(r"VISA DEBIT",desc,flags=re.IGNORECASE):
+                break
+
             price=getPrice(desc)
             if price:
                 if skip_price > 0:
@@ -128,7 +131,6 @@ class OCRReceiptExtractor(object):
         self.items=all_items
 ##        date_line=" ".join([line["description"] for line in self.lines[-2:]])
         date_line=" ".join(self.lines[-2:])
-##        date_line=self.lines[-2]
         date=date_pattern.search(date_line)
         if date:
             self.date=datetime.datetime(int(date.group(3)), # year
