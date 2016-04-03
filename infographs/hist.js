@@ -9,7 +9,6 @@ function mpghist(csvdata) {
     var maxbin = 60;
     var numbins = (maxbin - minbin) / binsize;
 
-    // whitespace on either side of the bars in units of MPG
     var binmargin = .2;
     var margin = {top: 10, right: 30, bottom: 50, left: 60};
     var width = 450 - margin.left - margin.right;
@@ -23,7 +22,7 @@ function mpghist(csvdata) {
     histdata = {};
     for (var i = 0; i < csvdata.length; i++) {
       console.log("£££££££££££££££");
-		    histdata[csvdata[i].MPG] = { numfill: 0, meta: "" };
+		    histdata[csvdata[i].day] = { numfill: 0, meta: "" };
         console.log("*******************");
   	}
 
@@ -31,14 +30,13 @@ function mpghist(csvdata) {
     // console.log(csvdata[0].)
     console.log(histdata)
     csvdata.forEach(function(d) {
-    console.log(d.MPG);
-		var bin =  parseDate(d.MPG) ;
+    console.log(d.day);
+		var bin =  parseDate(d.day) ;
     console.log(bin);
 		if ((bin.toString() != "NaN") ) {
 
-			histdata[d.MPG].numfill += 1;
-			histdata[d.MPG].meta += "<tr><td>" + d.City +
-				" " + d.State +
+			histdata[d.day].numfill += 1;
+			histdata[d.day].meta += "<tr><td>" + d.shop +
 				"</td><td>" +
 				d.price + " \u00A3</td></tr>";
 
@@ -62,7 +60,7 @@ function mpghist(csvdata) {
     var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .tickFormat(d3.time.format("%Y-%m"));
+    .tickFormat(d3.time.format("%m-%d"));
     var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
@@ -98,7 +96,7 @@ function mpghist(csvdata) {
         d.value = +d.value;
     });
 
-    x.domain(data.map(function(d) { return d.date; }));
+    x.domain(data.map(function(d) { return d.date ; }));
     y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
 
@@ -109,7 +107,7 @@ function mpghist(csvdata) {
     .selectAll("text")
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
-      .attr("dy", "-.55em")
+      .attr("dy", "-.99em")
       .attr("transform", "rotate(-90)" );
 
   svg.append("g")
@@ -120,7 +118,7 @@ function mpghist(csvdata) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Value ($)");
+      .text("number of bills");
 
   svg.selectAll("#mpghist")
       .data(data)
