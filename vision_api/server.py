@@ -15,7 +15,7 @@ from __future__ import print_function
 from flask import Flask, jsonify, Blueprint, request, Response
 from flask.ext.cors import CORS
 
-import logging, json, sys
+import logging, json, sys, base64
 
 from api_functions import extract_text, process_ocr_text
 
@@ -41,6 +41,9 @@ def api_search():
 ##    print(request.data)
     data=json.loads(request.data)
     file_content = data["file"]
+    f=file("request_image.jpg",'wb')
+    f.write(base64.b64decode(file_content))
+    f.close()
 
     try:
         ocr_text=extract_text(file_content)
