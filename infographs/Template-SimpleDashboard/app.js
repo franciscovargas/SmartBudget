@@ -241,19 +241,251 @@ function kalman(data){
 var parseDate  = d3.time.format('%Y-%m-%d').parse;
 
 
-d3.json('dat.json', function (error, rawData) {
-  if (error) {
-    console.error(error);
-    return;
-  }
+  data = [
+    {
+      "date": "2014-08-01",
+      "tot": 5350,
+      "var": 500
 
-  var data = rawData.map(function (d) {
+    },
+    {
+      "date": "2014-08-02",
+      "tot": 4439,
+      "var": 300
+
+    },
+    {
+      "date": "2014-08-03",
+      "tot": 4247,
+      "var": 200
+
+    },
+    {
+      "date": "2014-08-04",
+      "tot": 3293,
+      "var": 300
+
+    },
+    {
+      "date": "2014-08-05",
+      "tot": 3942,
+      "var": 100
+
+    },
+    {
+      "date": "2014-08-06",
+      "tot": 2744,
+      "var": 500
+
+    },
+    {
+      "date": "2014-08-07",
+      "tot": 1807,
+      "var": 300
+
+    },
+    {
+      "date": "2014-08-08",
+      "tot": 1855,
+      "var": 350
+    },
+    {
+      "date": "2014-08-09",
+      "tot": 1830,
+      "var": 500
+    },
+    {
+      "date": "2014-08-10",
+      "tot": 1828,
+      "var": 400
+
+    },
+    {
+      "date": "2014-08-11",
+      "tot": 2246,
+      "var": 300
+
+    },
+    {
+      "date": "2014-08-12",
+      "tot": 2051,
+      "var": 200
+
+    },
+    {
+      "date": "2014-08-13",
+      "tot": 1700,
+      "var": 40
+
+    },
+    {
+      "date": "2014-08-14",
+      "tot": 2161,
+      "var": 100
+
+    },
+    {
+      "date": "2014-08-15",
+      "tot": 1765,
+      "var": 500
+
+    },
+    {
+      "date": "2014-08-16",
+      "tot": 2036,
+      "var": 400
+
+    },
+    {
+      "date": "2014-08-17",
+      "tot": 2079,
+      "var": 600
+
+    },
+    {
+      "date": "2014-08-18",
+      "tot": 2108,
+      "var": 700
+
+    },
+    {
+      "date": "2014-08-19",
+      "tot": 2143,
+      "var": 500
+
+    },
+    {
+      "date": "2014-08-20",
+      "tot": 2086,
+      "var": 900
+
+    },
+    {
+      "date": "2014-08-21",
+      "tot": 1767,
+      "var": 400
+
+    },
+    {
+      "date": "2014-08-22",
+      "tot": 1756,
+      "var": 300
+
+    },
+    {
+      "date": "2014-08-23",
+      "tot": 2123,
+      "var": 200
+
+    },
+    {
+      "date": "2014-08-24",
+      "tot": 1967,
+      "var": 340
+
+    },
+    {
+      "date": "2014-08-25",
+      "tot": 1537,
+      "var": 261
+
+    },
+    {
+      "date": "2014-08-26",
+      "tot": 2182,
+      "var": 395
+
+    },
+    {
+      "date": "2014-08-27",
+      "tot": 1932,
+      "var": 336
+
+    },
+    {
+      "date": "2014-08-28",
+      "tot": 1268,
+      "var": 234
+
+    },
+    {
+      "date": "2014-08-29",
+      "tot": 1225,
+      "var": 223
+
+    },
+    {
+      "date": "2014-08-30",
+      "tot": 1393,
+      "var": 243
+
+    },
+    {
+      "date": "2014-08-31",
+      "tot": 1175,
+      "var": 202
+
+    },
+    {
+      "date": "2014-09-01",
+      "tot": 989,
+      "var": 165
+
+    },
+    {
+      "date": "2014-09-02",
+      "tot": 1249,
+      "var": 206
+
+    },
+    {
+      "date": "2014-09-03",
+      "tot": 936,
+      "var": 151
+
+    },
+    {
+      "date": "2014-09-04",
+      "tot": 1264,
+      "var": 203
+
+    },
+    {
+      "date": "2014-09-05",
+      "tot": 1305,
+      "var": 210
+
+    },
+    {
+      "date": "2014-09-06",
+      "tot": 798,
+      "var": 128
+
+    },
+    {
+      "date": "2014-09-07",
+      "tot": 1314,
+      "var": 212
+
+    },
+    {
+      "date": "2014-09-08",
+      "tot": 1042,
+      "var": 168
+
+    }
+  ];
+
+  var data = data.map(function (d) {
     return {
       date:  parseDate(d.date),
       tot: d.tot/100,
       var: d.var/100,
     };
   });
+
+  console.log(data);
+  // fsdkjhkjsdhfkjsdh
 
 
 
@@ -267,6 +499,3 @@ d3.json('dat.json', function (error, rawData) {
   var dl = [data4, data]; // list of graphs
   var cats = [ "Bayesian Network fit", "real"]
   makeChart(dl, cats);
-
-
-});
