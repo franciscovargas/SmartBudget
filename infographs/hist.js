@@ -46,8 +46,8 @@ function mpghist(csvdata) {
     console.log(histdata);
 
     var margin = {top: 20, right: 20, bottom: 70, left: 40},
-    width = 400 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
+    width = 600 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
     // Parse the date / time
     // var	parseDate = d3.time.format("%Y-%m").parse;
@@ -120,7 +120,7 @@ function mpghist(csvdata) {
       .style("text-anchor", "end")
       .text("number of bills");
 
-  svg.select("#it")
+  svg.selectAll("#mpghist")
       .data(data)
     .enter().append("rect")
       .style("fill", "steelblue")

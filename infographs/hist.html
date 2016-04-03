@@ -31,8 +31,10 @@
     <script>
 // plot a histogram from mpg data in a .csv file
 
-
+// This is just for example purposes
 // Read in .csv data and make graph
+// mpghist expects a list of jsons with the following format:
+// {"day": ..., "price": ..., "shop": ...}
 d3.csv("prius_gas.csv", parser,
        function(error, csvdata) {
      console.log(csvdata);
